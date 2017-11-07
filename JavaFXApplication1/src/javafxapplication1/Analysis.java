@@ -45,6 +45,7 @@ public class Analysis {
         Map<String, Integer> analyzed = new HashMap<>();
         String splited[] = text.split("("+Pattern.quote(sentenceLimiter)+")|("+Pattern.quote(wordLimiter)+")");
         for (String c : splited ) {
+            
             if(analyzed.containsKey(c)){
                 analyzed.put(c , analyzed.get(c) + 1);
             }else{
@@ -205,6 +206,9 @@ public class Analysis {
         Map<Integer, Integer> wordsLength = new HashMap<>();
         String splitted [] = input.split("("+Pattern.quote(sentenceLimiter)+")|("+Pattern.quote(wordLimiter)+")|(\\n)");
         for (String x : splitted) {
+            if(x.equals("")){
+                continue;
+            }
             int lengthOfX = x.length();
             if(wordsLength.containsKey(lengthOfX)){
                 wordsLength.put(lengthOfX, wordsLength.get(lengthOfX) + 1);
