@@ -29,5 +29,6 @@
       <Button fx:id="buttonAnalyze10" layoutX="678.0" layoutY="153.0" mnemonicParsing="false" onAction="#handleButtonAnalyze10" text="Analyze10" />
       <Button fx:id="buttonAnalyze11" layoutX="678.0" layoutY="188.0" onAction="#handleButtonAnalyze11" text="Analyze11" />
       <Button fx:id="buttonAnalyze12" layoutX="678.0" layoutY="228.0" mnemonicParsing="false" onAction="#handleButtonAnalyze12" text="Analyze12" />
+      <Button fx:id="buttonAnalyze13" layoutX="678.0" layoutY="262.0" mnemonicParsing="false" onAction="#handleButtonAnalyze13" text="Analyze13" />
     </children>
 </AnchorPane>

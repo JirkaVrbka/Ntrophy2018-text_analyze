@@ -325,5 +325,9 @@ public class Analysis {
         return String.valueOf(false);
     }
 */
+    
+    public static  int analyzeCharAllCount(String input){
+        return input.length();
+    }
 }
 

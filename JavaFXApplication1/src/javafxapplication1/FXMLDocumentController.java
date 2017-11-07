@@ -54,6 +54,8 @@ public class FXMLDocumentController implements Initializable {
     private Button buttonAnalyze11;
     @FXML
     private Button buttonAnalyze12;
+    @FXML
+    private Button buttonAnalyze13;
     
 
     @FXML
@@ -116,6 +118,11 @@ public class FXMLDocumentController implements Initializable {
         Analyze(AnalyzeType.CHOKO);
     }
 
+    @FXML
+    private void handleButtonAnalyze13(ActionEvent event) {
+        Analyze(AnalyzeType.CHAR_ALL_COUNT);
+    }
+
     
     private enum AnalyzeType{
         CHAR_COUNT,
@@ -129,7 +136,8 @@ public class FXMLDocumentController implements Initializable {
         WORD,
         WORD_AVR,
         MIN_MAX,
-        CHOKO
+        CHOKO,
+        CHAR_ALL_COUNT
        /* MIN_MAX,
         CONTAINS_CHOK,
         WORD_AVG,
@@ -154,7 +162,7 @@ public class FXMLDocumentController implements Initializable {
             buttonAnalyze10.setText(AnalyzeType.WORD_AVR.name());
             buttonAnalyze11.setText(AnalyzeType.MIN_MAX.name());
             buttonAnalyze12.setText(AnalyzeType.CHOKO.name());
-            /*buttonAnalyze13.setText(AnalyzeType.WORD_COUNT.name());*/
+            buttonAnalyze13.setText(AnalyzeType.CHAR_ALL_COUNT.name());
         }
     }    
     
@@ -201,6 +209,9 @@ public class FXMLDocumentController implements Initializable {
                 break;
             case CHOKO : 
                 returnText = Analysis.writeAnalyze(Analysis.analyzeContainsChockolate(wordLimiter, sentenceLimiter, userInput));
+                break;
+            case CHAR_ALL_COUNT : 
+                returnText = Analysis.writeAnalyze(Analysis.analyzeCharAllCount(userInput));
                 break;
             default:
                 returnText ="Unknown analyse";
