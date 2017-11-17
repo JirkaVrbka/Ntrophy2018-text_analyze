@@ -12,7 +12,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.text.TextFlow;
 
 /**
  *
@@ -23,11 +25,9 @@ public class FXMLDocumentController implements Initializable {
     private boolean debug = true;
     
     @FXML
-    private Label label;
-    @FXML
     private TextField separatorSentence;
     @FXML
-    private TextField userText;
+    private TextArea userText;
     @FXML
     private TextField separatorWord;
     @FXML
@@ -56,6 +56,8 @@ public class FXMLDocumentController implements Initializable {
     private Button buttonAnalyze12;
     @FXML
     private Button buttonAnalyze13;
+    @FXML
+    private TextArea results;
     
 
     @FXML
@@ -137,18 +139,13 @@ public class FXMLDocumentController implements Initializable {
         WORD_AVR,
         MIN_MAX,
         CHOKO,
-        CHAR_ALL_COUNT
-       /* MIN_MAX,
-        CONTAINS_CHOK,
-        WORD_AVG,
-        WORD,
-        SPACE_COUNT,
-        DELIMITER_COUNT,*/
-        
+        CHAR_ALL_COUNT        
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        results.setStyle("-fx-control-inner-background:#F0F0F0;");
+        
         if(debug){
             buttonAnalyze1.setText(AnalyzeType.CHAR_COUNT.name());
             buttonAnalyze2.setText(AnalyzeType.MIRROR.name());
@@ -167,10 +164,10 @@ public class FXMLDocumentController implements Initializable {
     }    
     
     private void Analyze(AnalyzeType type){
-        AnalyzeCheckSetDefault();
+        //AnalyzeCheckSetDefault();
         String userInput = userText.getText();
-        String wordLimiter = separatorWord.getText();
-        String sentenceLimiter = separatorSentence.getText();
+        String wordLimiter = separatorWord.getText().equals("") ? "." : separatorWord.getText();
+        String sentenceLimiter = separatorSentence.getText().equals("") ? "." : separatorSentence.getText();
         
         String returnText;
         switch(type){
@@ -217,9 +214,9 @@ public class FXMLDocumentController implements Initializable {
                 returnText ="Unknown analyse";
         }
         
-        label.setText(returnText);
+        results.setText(returnText);
     }
-    
+    /*
     private void AnalyzeCheckSetDefault(){
         if(separatorSentence.getText().equals("")){
             separatorSentence.setText(".");
@@ -228,5 +225,5 @@ public class FXMLDocumentController implements Initializable {
         if(separatorWord.getText().equals("")){
             separatorWord.setText(" ");
         }
-    }
+    }*/
 }
