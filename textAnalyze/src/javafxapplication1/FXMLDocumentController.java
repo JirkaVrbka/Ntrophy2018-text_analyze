@@ -11,10 +11,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.text.TextFlow;
 
 /**
  *
@@ -22,7 +20,7 @@ import javafx.scene.text.TextFlow;
  */
 public class FXMLDocumentController implements Initializable {
     
-    private boolean debug = true;
+    private boolean debug = false;
     
     @FXML
     private TextField separatorSentence;
@@ -77,7 +75,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void handleButtonAnalyze4(ActionEvent event) {
-        Analyze(AnalyzeType.SENTENCE);
+        Analyze(AnalyzeType.SENTENCE_WORDS);
     }
 
     @FXML
@@ -117,7 +115,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void handleButtonAnalyze12(ActionEvent event) {
-        Analyze(AnalyzeType.CHOKO);
+        Analyze(AnalyzeType.LOREM);
     }
 
     @FXML
@@ -130,7 +128,7 @@ public class FXMLDocumentController implements Initializable {
         CHAR_COUNT,
         RANDOM_INT,
         MIRROR,
-        SENTENCE,
+        SENTENCE_WORDS,
         SENTENCE_AVG,
         WORD_COUNT,
         SPACE_COUNT,
@@ -138,7 +136,7 @@ public class FXMLDocumentController implements Initializable {
         WORD,
         WORD_AVR,
         MIN_MAX,
-        CHOKO,
+        LOREM,
         CHAR_ALL_COUNT        
     }
     
@@ -150,7 +148,7 @@ public class FXMLDocumentController implements Initializable {
             buttonAnalyze1.setText(AnalyzeType.CHAR_COUNT.name());
             buttonAnalyze2.setText(AnalyzeType.MIRROR.name());
             buttonAnalyze3.setText(AnalyzeType.RANDOM_INT.name());
-            buttonAnalyze4.setText(AnalyzeType.SENTENCE.name());
+            buttonAnalyze4.setText(AnalyzeType.SENTENCE_WORDS.name());
             buttonAnalyze5.setText(AnalyzeType.SENTENCE_AVG.name());
             buttonAnalyze6.setText(AnalyzeType.WORD_COUNT.name());
             buttonAnalyze7.setText(AnalyzeType.SPACE_COUNT.name());
@@ -158,7 +156,7 @@ public class FXMLDocumentController implements Initializable {
             buttonAnalyze9.setText(AnalyzeType.WORD.name());
             buttonAnalyze10.setText(AnalyzeType.WORD_AVR.name());
             buttonAnalyze11.setText(AnalyzeType.MIN_MAX.name());
-            buttonAnalyze12.setText(AnalyzeType.CHOKO.name());
+            buttonAnalyze12.setText(AnalyzeType.LOREM.name());
             buttonAnalyze13.setText(AnalyzeType.CHAR_ALL_COUNT.name());
         }
     }    
@@ -166,7 +164,7 @@ public class FXMLDocumentController implements Initializable {
     private void Analyze(AnalyzeType type){
         //AnalyzeCheckSetDefault();
         String userInput = userText.getText();
-        String wordLimiter = separatorWord.getText().equals("") ? "." : separatorWord.getText();
+        String wordLimiter = separatorWord.getText().equals("") ? " " : separatorWord.getText();
         String sentenceLimiter = separatorSentence.getText().equals("") ? "." : separatorSentence.getText();
         
         String returnText;
@@ -180,8 +178,8 @@ public class FXMLDocumentController implements Initializable {
             case RANDOM_INT : 
                 returnText = Analysis.writeAnalyze(Analysis.analyzeRandomInt());
                 break;
-            case SENTENCE : 
-                returnText = Analysis.writeAnalyze(Analysis.analyzeSentence(sentenceLimiter, userInput));
+            case SENTENCE_WORDS : 
+                returnText = Analysis.writeAnalyze(Analysis.analyzeWordsInSentence(sentenceLimiter, wordLimiter, userInput));
                 break;
             case SENTENCE_AVG : 
                 returnText = Analysis.writeAnalyze(Analysis.analyzeSentenceAverage(sentenceLimiter, userInput));
@@ -204,8 +202,8 @@ public class FXMLDocumentController implements Initializable {
             case MIN_MAX : 
                 returnText = Analysis.writeAnalyze(Analysis.analyzeDifferenceMinMaxWordLength(userInput, wordLimiter, sentenceLimiter));
                 break;
-            case CHOKO : 
-                returnText = Analysis.writeAnalyze(Analysis.analyzeContainsChockolate(wordLimiter, sentenceLimiter, userInput));
+            case LOREM : 
+                returnText = Analysis.writeAnalyze(Analysis.analyzeContainsLoremIpsum(wordLimiter, sentenceLimiter, userInput));
                 break;
             case CHAR_ALL_COUNT : 
                 returnText = Analysis.writeAnalyze(Analysis.analyzeCharAllCount(userInput));

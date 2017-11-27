@@ -10,9 +10,7 @@ package javafxapplication1;
  * @author jirka
  */
 
-import java.io.StringWriter;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,37 +55,52 @@ public class Analysis {
 
     }
 
-    public static Map<Integer, Integer> analyzeSentence(String limiter, String text){
+    public static Map<Integer, Integer> analyzeWordsInSentence(String limiterSentence,  String limiterWord, String text){
 
         Map<Integer, Integer> analyzed = new HashMap<>();
-        String splited[] = text.split(Pattern.quote(limiter));
-        for (String c : splited ) {
-            Integer len = c.length();
-            if(analyzed.containsKey(len)){
-                analyzed.put(len , analyzed.get(len) + 1);
-            }else{
-                analyzed.put(len , 1);
+        String splited[] = text.split(Pattern.quote(limiterSentence));
+        for (String sentence : splited ) {
+            int numberWords = sentence.split(limiterWord).length;
+            if(sentence.startsWith(limiterWord)){
+                numberWords--;
             }
+            if(analyzed.containsKey(numberWords)){
+                    analyzed.put(numberWords , analyzed.get(numberWords) + 1);
+                }else{
+                    analyzed.put(numberWords , 1);
+            }
+            /*
+            Map<Integer, Integer> len = analyzeWordsLengthFrequency(c, limiterWord, limiterSentence);
+            len.forEach((key, value) -> {
+                if(analyzed.containsKey(key)){
+                    analyzed.put(key , analyzed.get(key) + value);
+                }else{
+                    analyzed.put(key , value);
+                }
+            });*/
         }
 
         return analyzed;
 
     }
 
-    public static double analyzeSentenceAverage(String limiter, String text){
-
-        Map<Integer, Integer> map = analyzeSentence(limiter, text);
+    public static double analyzeSentenceAverage(String limiterSentence, String text){
+        //TODO do this
+/*
+        Map<Integer, Integer> map = new HashMap<>();
+        String splited[] = text.split(Pattern.quote(limiterSentence));
         double lenghts = 0;
         for (Map.Entry<Integer,Integer> entry: map.entrySet()) {
             lenghts += entry.getKey()*entry.getValue();
         }
-        return lenghts / (text.split(Pattern.quote(limiter)).length);
+        return lenghts / (text.split(Pattern.quote(limiter)).length);*/
+        return 3.14;
 
     }
 
     public static String writeAnalyze(Map analyzed){
         AtomicReference<String> toReturn = new AtomicReference<>("");
-        analyzed.forEach((key, value) -> toReturn.set(toReturn.toString() + key + " : "+value+"\n"));
+        analyzed.forEach((key, value) -> toReturn.set(toReturn.toString() + key + "\t"+value+"\n"));
         
         return toReturn.toString();
     }
@@ -114,7 +127,7 @@ public class Analysis {
         
         for(int i : analyzed){
             count ++ ;
-            toReturn += count + " : "+i+"\n";
+            toReturn += count + "\t"+i+"\n";
         }
         
         return toReturn;
@@ -293,20 +306,22 @@ public class Analysis {
     /**
      * returns if input contains chockolate 4okolada chocko
      * @param input
-     * @param enOfSentence
-     * @param endOfWord
+     * @param wordLimiter
+     * @param sentenceLimiter
      * @return 
      */
-    public static boolean analyzeContainsChockolate (String wordLimiter, String sentenceLimiter, String input) {
+    public static String analyzeContainsLoremIpsum (String wordLimiter, String sentenceLimiter, String input) {
         List <String> chocko = Arrays.asList("chockolate" , "čokolada" , "chocko");
         /*String splitted [] = input.split("("+Pattern.quote(endOfWord)+")|("+Pattern.quote(enOfSentence)+")|(\\n)");
         for (String x : splitted) {
         if (chocko.contains(x)){
         return String.valueOf(true);            
-        }
+        }true
         }
         return String.valueOf(false);*/       
-        return chocko.stream().anyMatch((s) -> (input.contains(s)));
+        return input.contains("Lorem ipsum") ? "Zdravi tym logiky!" : (input.
+                equals("42") ? "This is the right answer but what is the question?" 
+                : "false");
     }
     /**
      * asks for input then returns true if input text contains word
